@@ -39,7 +39,7 @@ func leaveFromRoom(user string, room string) {
 }
 
 func ExampleEvents() {
-	// regiter our events to the default event emmiter
+	// register our events to the default event emitter
 	for evt, listeners := range testEvents {
 		On(evt, listeners...)
 	}
@@ -80,7 +80,9 @@ func TestEvents(t *testing.T) {
 	}
 
 	if e.Len() != 1 {
-		t.Fatalf("Length of the listeners is: %d, while expecting: %d", e.ListenerCount("my_event"), 1)
+		t.Fatalf(
+			"Length of the listeners is: %d, while expecting: %d",
+			e.ListenerCount("my_event"), 1)
 	}
 
 	e.RemoveAllListeners("my_event")
@@ -89,7 +91,9 @@ func TestEvents(t *testing.T) {
 	}
 
 	if e.Len() != 0 {
-		t.Fatalf("Length of the listeners is: %d, while expecting: %d", e.ListenerCount("my_event"), 0)
+		t.Fatalf(
+			"Length of the listeners is: %d, while expecting: %d",
+			e.ListenerCount("my_event"), 0)
 	}
 }
 
@@ -100,7 +104,9 @@ func TestEventsOnce(t *testing.T) {
 	var count = 0
 	Once("my_event", func(payload ...interface{}) {
 		if count > 0 {
-			t.Fatalf("Once's listener fired more than one time! count: %d", count)
+			t.Fatalf(
+				"Once's listener fired more than one time! count: %d",
+				count)
 		}
 		count++
 	})
@@ -110,7 +116,9 @@ func TestEventsOnce(t *testing.T) {
 	}
 
 	if l := len(Listeners("my_event")); l != 1 {
-		t.Fatalf("Real  event's listeners (from Listeners) should be: %d but has: %d", 1, l)
+		t.Fatalf(
+			"Real  event's listeners (from Listeners) should " +
+			"be: %d but has: %d", 1, l)
 	}
 
 	for i := 0; i < 10; i++ {
@@ -118,11 +126,13 @@ func TestEventsOnce(t *testing.T) {
 	}
 
 	if l := ListenerCount("my_event"); l > 0 {
-		t.Fatalf("Real event's listeners length count should be: %d but has: %d", 0, l)
+		t.Fatalf("Real event's listeners length count " +
+			"should be: %d but has: %d", 0, l)
 	}
 
 	if l := len(Listeners("my_event")); l > 0 {
-		t.Fatalf("Real event's listeners length count ( from Listeners) should be: %d but has: %d", 0, l)
+		t.Fatalf("Real event's listeners length " +
+			"count ( from Listeners) should be: %d but has: %d", 0, l)
 	}
 
 }
